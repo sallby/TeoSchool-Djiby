@@ -27,3 +27,51 @@ variable "admin_enabled" {
   type        = bool
   default     = true
 }
+
+variable "aks_cluster_name" {
+  description = "Nom du cluster AKS"
+  type        = string
+  default     = "djibyAKSCluster"
+}
+
+variable "dns_prefix" {
+  description = "Préfixe DNS du cluster AKS"
+  type        = string
+  default     = "djibyaksdns"
+}
+
+variable "kubernetes_version" {
+  description = "Version de Kubernetes"
+  type        = string
+  default     = "1.21.4"
+}
+
+variable "node_count" {
+  description = "Nombre de nœuds du pool par défaut"
+  type        = number
+  default     = 1
+}
+
+variable "node_size" {
+  description = "Taille des nœuds du pool par défaut"
+  type        = string
+  default     = "Standard_D2s_v3"
+}
+
+variable "service_principal_client_id" {
+  description = "ID client du service principal Azure"
+  type        = string
+}
+
+variable "service_principal_client_secret" {
+  description = "Secret client du service principal Azure"
+  type        = string
+}
+
+variable "tags" {
+  description = "Étiquettes pour le cluster AKS"
+  type        = map(string)
+  default     = {
+    Environment = "Dev"
+  }
+}
