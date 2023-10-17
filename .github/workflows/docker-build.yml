@@ -1,0 +1,45 @@
+name: Deploy to Azure
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.28.0
+
+      - name: Check and Install Az CLI
+        run: |
+          if ! command -v az &> /dev/null
+          then
+            echo "Az CLI not found. Installing..."
+            curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+          fi
+        shell: bash
+      
+      - name: Login to Azure
+        id: azure_login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Initialize Terraform
+        run: terraform init
+  
+      - name: Validate Terraform Configuration
+        run: terraform validate
+  
+      - name: Plan Terraform Deployment
+        run: terraform plan
+  
+      - name: Apply Terraform Deployment
+        run: terraform apply -auto-approve

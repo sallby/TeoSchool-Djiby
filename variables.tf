@@ -43,7 +43,7 @@ variable "dns_prefix" {
 variable "kubernetes_version" {
   description = "Version de Kubernetes"
   type        = string
-  default     = "1.21.4"
+  default     = "1.28.0"
 }
 
 variable "node_count" {
@@ -58,20 +58,10 @@ variable "node_size" {
   default     = "Standard_D2s_v3"
 }
 
-variable "service_principal_client_id" {
-  description = "ID client du service principal Azure"
-  type        = string
-}
-
-variable "service_principal_client_secret" {
-  description = "Secret client du service principal Azure"
-  type        = string
-}
-
 variable "tags" {
   description = "Étiquettes pour le cluster AKS"
   type        = map(string)
-  default     = {
+  default = {
     Environment = "Dev"
   }
 }

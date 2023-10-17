@@ -28,15 +28,17 @@ resource "azurerm_kubernetes_cluster" "aks" {
     node_count = var.node_count
     vm_size    = var.node_size
   }
-
-  service_principal {
-    client_id     = var.service_principal_client_id
-    client_secret = var.service_principal_client_secret
+  identity {
+    type = "SystemAssigned"
   }
-
+  network_profile {
+    load_balancer_sku = "standard"
+    network_plugin    = "kubenet"
+  }
   tags = var.tags
 }
-
-output "acr_login_server" {
-  value = azurerm_container_registry.acr.login_server
+resource "azurerm_role_assignment" "role_acrpull" {
+  scope                = azurerm_container_registry.acr.id
+  role_definition_name = "acrpull"
+  principal_id         = azurerm_kubernetes_cluster.aks.kubelet_identity.0.object_id
 }
