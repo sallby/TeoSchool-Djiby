@@ -58,6 +58,11 @@ variable "node_size" {
   default     = "Standard_D2s_v3"
 }
 
+variable "storage_account_name" {
+  type        = string
+  description = "The storage account name"
+}
+
 variable "tags" {
   description = "Étiquettes pour le cluster AKS"
   type        = map(string)
