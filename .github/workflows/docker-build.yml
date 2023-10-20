@@ -20,29 +20,15 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Setup Terraform
-<<<<<<< HEAD
         uses: hashicorp/setup-terraform@v2
-
-
-      - name: Setup Azure
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }} 
-
-=======
-        uses: hashicorp/setup-terraform@v1
       - name: Setup Azure
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
->>>>>>> 42dc360152572733198ce1f2532df4bba4790c50
       - name: List directory
         run: ls -a
 
       - name: Terraform Init
-<<<<<<< HEAD
-        run: terraform init
-=======
         run: terraform init
 
       - name: Terraform Validate
@@ -53,4 +39,3 @@ jobs:
 
       - name: Deploy if approved
         run: terraform apply -auto-approve 
->>>>>>> 42dc360152572733198ce1f2532df4bba4790c50
