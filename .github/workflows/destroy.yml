@@ -1,4 +1,4 @@
-name: Deploy to Azure with Terraform
+name: Destroy resources Azure
 
 on:
     workflow_dispatch
