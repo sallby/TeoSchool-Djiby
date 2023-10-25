@@ -23,9 +23,6 @@ jobs:
       - name: Clone Github Repo Action
         uses: actions/checkout@v4
 
-      - name: ping azure
-        run: cat /etc/resolv.conf; ping portal.azure.com
-
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
