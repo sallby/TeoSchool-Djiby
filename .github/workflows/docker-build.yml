@@ -23,11 +23,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       
-      - name: test connexion
-        run: cat /etc/resolv.conf
+      - name: Injection du nom de demain
+        run: sudo rm -f /etc/resolv.conf; sudo echo "nameserver 8.8.8.8" >>/etc/resolv.conf
 
       - name: ping azure
-        run: ping portal.azure.com
+        run: cat /etc/resolv.conf; ping portal.azure.com
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
