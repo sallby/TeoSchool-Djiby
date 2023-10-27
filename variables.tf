@@ -55,7 +55,7 @@ variable "node_count" {
 variable "node_size" {
   description = "Taille des nœuds du pool par défaut"
   type        = string
-  default     = "Standard_D2s_v3"
+  default     = "Standard_B2s"
 }
 
 variable "storage_account_name" {
