@@ -20,14 +20,6 @@ resource "azurerm_container_registry" "acr" {
   admin_enabled       = var.admin_enabled
 }
 
-resource "azurerm_log_analytics_workspace" "log_analytics" {
-  name                = "log-analytics-djiby"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-  sku                 = "PerGB2018"
-  retention_in_days   = 30
-}
-
 resource "azurerm_kubernetes_cluster" "aks" {
   name                = var.aks_cluster_name
   location            = azurerm_resource_group.rg.location
@@ -48,10 +40,6 @@ resource "azurerm_kubernetes_cluster" "aks" {
     network_plugin    = "kubenet"
   }
   tags = var.tags
-
-  oms_agent {
-      log_analytics_workspace_id  = azurerm_log_analytics_workspace.log_analytics.id
-  }
 }
 
 resource "azurerm_role_assignment" "role_acrpull" {
