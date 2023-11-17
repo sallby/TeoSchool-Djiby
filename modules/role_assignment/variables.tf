@@ -1,11 +1,9 @@
-variable "resource_group_name" {
+variable "acr_id" {
   description = "Nom du groupe de ressources"
   type        = string
-  default     = "re-teoSchool-djiby"
 }
 
-variable "resource_group_location" {
+variable "kubelet_identity" {
   description = "Emplacement du groupe de ressources"
   type        = string
-  default     = "West Europe"
 }

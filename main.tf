@@ -7,43 +7,26 @@ provider "azurerm" {
   skip_provider_registration = true
 }
 
-resource "azurerm_resource_group" "rg" {
-  name     = var.resource_group_name
-  location = var.resource_group_location
+module "rg" {
+  source                  = "./modules/resource_group"
+  resource_group_name     = var.resource_group_name
+  resource_group_location = var.resource_group_location
 }
 
-resource "azurerm_container_registry" "acr" {
-  name                = var.container_registry_name
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  sku                 = var.container_registry_sku
-  admin_enabled       = var.admin_enabled
+module "acr" {
+  source              = "./modules/acr"
+  resource_group_name = module.rg.resource_group_name
+  location            = module.rg.resource_group_location
 }
 
-resource "azurerm_kubernetes_cluster" "aks" {
-  name                = var.aks_cluster_name
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-  dns_prefix          = var.dns_prefix
-  kubernetes_version  = var.kubernetes_version
-
-  default_node_pool {
-    name       = "default"
-    node_count = var.node_count
-    vm_size    = var.node_size
-  }
-  identity {
-    type = "SystemAssigned"
-  }
-  network_profile {
-    load_balancer_sku = "standard"
-    network_plugin    = "kubenet"
-  }
-  tags = var.tags
+module "aks" {
+  source              = "./modules/aks"
+  resource_group_name = module.rg.resource_group_name
+  location            = module.rg.resource_group_location
 }
 
-resource "azurerm_role_assignment" "role_acrpull" {
-  scope                = azurerm_container_registry.acr.id
-  role_definition_name = "acrpull"
-  principal_id         = azurerm_kubernetes_cluster.aks.kubelet_identity.0.object_id
+module "role_acrpull" {
+  source           = "./modules/role_assignment"
+  acr_id           = module.acr.acr_id
+  kubelet_identity = module.aks.kubelet_identity
 }
