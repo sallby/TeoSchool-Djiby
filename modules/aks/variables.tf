@@ -1,31 +1,31 @@
 variable "aks_cluster_name" {
   description = "Nom du cluster AKS"
   type        = string
-  default = "aks-djiby"
+  default     = "aks-djiby"
 }
 
 variable "dns_prefix" {
   description = "Préfixe DNS du cluster AKS"
   type        = string
-  default = "dnsaksdjiby"
+  default     = "dnsaksdjiby"
 }
 
 variable "kubernetes_version" {
   description = "Version de Kubernetes"
   type        = string
-  default = "1.28.0"
+  default     = "1.28.5"
 }
 
 variable "node_count" {
   description = "Nombre de nœuds du pool par défaut"
   type        = number
-  default = 1
+  default     = 1
 }
 
 variable "node_size" {
   description = "Taille des nœuds du pool par défaut"
   type        = string
-  default = "Standard_B2s"
+  default     = "Standard_B2s"
 }
 
 variable "tags" {
